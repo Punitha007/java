@@ -1,0 +1,46 @@
+let choice;
+do {
+  choice = prompt(
+    "Choose an operation:\n1. Add\n2. Subtract\n3. Multiply\n4. Divide\n5. Exit"
+  );
+// Convert to number
+  const option = parseInt(choice);
+if (option >= 1 && option <= 4) {
+    // Get numbers
+    let num1 = parseFloat(prompt("Enter first number:"));
+    let num2 = parseFloat(prompt("Enter second number:"));
+// Check if inputs are numbers
+    if (isNaN(num1) || isNaN(num2)) {
+      alert("Invalid input. Please enter numbers.");
+      continue;
+    }
+let result;
+    switch (option) {
+      case 1:
+        result = num1 + num2;
+        alert(`Result: ${num1} + ${num2} = ${result}`);
+        break;
+      case 2:
+        result = num1 - num2;
+        alert(`Result: ${num1} - ${num2} = ${result}`);
+        break;
+      case 3:
+        result = num1 * num2;
+        alert(`Result: ${num1} × ${num2} = ${result}`);
+        break;
+      case 4:
+        if (num2 === 0) {
+          alert("Error: Division by zero");
+        } else {
+          result = num1 / num2;
+          alert(`Result: ${num1} ÷ ${num2} = ${result}`);
+        }
+        break;
+    }
+  } else if (option === 5) {
+    alert("Exiting calculator...");
+    break;
+  } else {
+    alert("Invalid choice. Please select a valid option.");
+  }
+} while (true);
