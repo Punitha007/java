@@ -1,0 +1,46 @@
+// Product Array
+const products = [
+  { id: 1, name: "Laptop", price: 50000, quantity: 2 },
+  { id: 2, name: "Mouse", price: 500, quantity: 0 },
+  { id: 3, name: "Keyboard", price: 1500, quantity: 3 },
+  { id: 4, name: "Headphones", price: 2000, quantity: 1 }
+];
+// 1. Filter products that are available (quantity > 0)
+const availableProducts = products.filter(product => product.quantity > 0);
+console.log("Available Products:", availableProducts);
+// 2. Calculate total cart value using map and reduce
+const totalCartValue = availableProducts
+  .map(p => p.price * p.quantity)
+  .reduce((acc, curr) => acc + curr, 0);
+console.log("Total Cart Value: ₹" + totalCartValue);
+// 3. Remove a product using splice
+function removeProductById(id) {
+  const index = products.findIndex(p => p.id === id);
+  if (index !== -1) {
+    products.splice(index, 1);
+    console.log(`Product with ID ${id} removed.`);
+  } else {
+    console.log(`Product with ID ${id} not found.`);
+  }
+}
+removeProductById(2); // Example
+// 4. Clone and update a product
+function cloneAndUpdateProduct(product, updates) {
+  return { ...product, ...updates };
+}
+const updatedProduct = cloneAndUpdateProduct(products[0], { price: 48000 });
+console.log("Updated Product:", updatedProduct);
+// 5. Product object with method
+const productObject = {
+  id: 5,
+  name: "Charger",
+  price: 700,
+  quantity: 4,
+  printDetails() {
+    console.log(`Product: ${this.name}, Price: ₹${this.price}, Quantity: ${this.quantity}`);
+  }
+};
+productObject.printDetails();
+// 6. Destructuring for display
+const { name, price, quantity } = productObject;
+console.log(`Name: ${name}, Price: ₹${price}, Quantity: ${quantity}`);
