@@ -1,0 +1,301 @@
+// user.js
+import { validateEmail } from "./utils.js";
+
+class User {
+  #name;
+  #email;
+
+  constructor(name, email) {
+    this.#name = name;
+    if (User.isValidEmail(email)) {
+      this.#email = email;
+    } else {
+      throw new Error("Invalid email format");
+    }
+  }
+
+  // Getter and Setter for name
+  get name() {
+    return this.#name;
+  }
+
+  set name(newName) {
+    if (newName.trim().length > 0) {
+      this.#name = newName;
+    } else {
+      throw new Error("Name cannot be empty");
+    }
+  }
+
+  // Getter and Setter for email
+  get email() {
+    return this.#email;
+  }
+
+  set email(newEmail) {
+    if (User.isValidEmail(newEmail)) {
+      this.#email = newEmail;
+    } else {
+      throw new Error("Invalid email format");
+    }
+  }
+
+  // Static method to validate email
+  static isValidEmail(email) {
+    return validateEmail(email);
+  }
+}
+
+// Prototype method to log activity
+User.prototype.logActivity = function (activity) {
+  console.log(`[${this.name}] performed activity: ${activity}`);
+};
+
+export default User;
+
+// Contact Management Module
+
+// Contact Constructor
+function Contact(name, phone, email) {
+  this.name = name;
+  this.phone = phone;
+  this.email = email;
+
+  // Method to display contact info
+  this.display = function () {
+    const { name, phone, email } = this; // Destructuring
+    console.log(`Name: ${name}, Phone: ${phone}, Email: ${email}`);
+  };
+}
+
+// Create an array of contact objects
+let contacts = [
+  new Contact("Alice", "1234567890", "alice@example.com"),
+  new Contact("Bob", "9876543210", "bob@example.com"),
+];
+
+// Access properties using dot and bracket notation
+console.log("Dot notation:", contacts[0].name);
+console.log("Bracket notation:", contacts[0]["email"]);
+
+// Iterate through the array of contacts
+console.log("\nAll contacts:");
+contacts.forEach((c) => c.display());
+
+// Function to add multiple contacts at once (rest parameter)
+function addContacts(...newContacts) {
+  contacts.push(...newContacts); // Using spread here
+}
+
+const c1 = new Contact("Charlie", "5551112222", "charlie@example.com");
+const c2 = new Contact("Diana", "4443332211", "diana@example.com");
+addContacts(c1, c2);
+
+console.log("\nAfter adding multiple contacts:");
+contacts.forEach((c) => c.display());
+
+// Merge multiple contact arrays using spread operator
+const moreContacts = [
+  new Contact("Eva", "2221114444", "eva@example.com"),
+  new Contact("Frank", "9998887777", "frank@example.com"),
+];
+
+contacts = [...contacts, ...moreContacts];
+
+console.log("\nAfter merging contact arrays:");
+contacts.forEach((c) => c.display());
+
+// Demonstrating call(), apply(), and bind()
+const specialContact = {
+  name: "George",
+  phone: "1112223333",
+  email: "george@example.com",
+};
+
+// Borrow display method using call
+console.log("\nUsing call():");
+c1.display.call(specialContact);
+
+// Borrow display method using apply
+console.log("\nUsing apply():");
+c1.display.apply(specialContact);
+
+// Borrow display method using bind
+console.log("\nUsing bind():");
+const boundDisplay = c1.display.bind(specialContact);
+boundDisplay();
+
+// Library Management System Module
+
+// Base Class: Book
+class Book {
+  constructor(title, author, publishedYear) {
+    this.title = title;
+    this.author = author;
+    this.publishedYear = new Date(publishedYear); // Using Date object
+  }
+
+  // Method to get summary
+  getSummary() {
+    return `${this.title} by ${this.author}, published in ${this.publishedYear.getFullYear()}`;
+  }
+}
+
+// Subclass: EBook
+class EBook extends Book {
+  constructor(title, author, publishedYear, fileSize) {
+    super(title, author, publishedYear); // Calling parent constructor
+    this.fileSize = fileSize;
+  }
+
+  // Overriding getSummary
+  getSummary() {
+    return `${super.getSummary()} [File Size: ${this.fileSize}MB]`;
+  }
+}
+
+// Create Book instances
+const book1 = new Book("Atomic Habits", "James Clear", "2018-10-16");
+const book2 = new Book("The Alchemist", "Paulo Coelho", "1988-01-01");
+
+// Create EBook instances
+const ebook1 = new EBook("Deep Work", "Cal Newport", "2016-01-05", 2.5);
+const ebook2 = new EBook("Clean Code", "Robert C. Martin", "2008-08-01", 4.2);
+
+// Display summaries
+console.log(book1.getSummary());
+console.log(book2.getSummary());
+console.log(ebook1.getSummary());
+console.log(ebook2.getSummary());
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #taskInput {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    #addBtn {
+      padding: 8px 12px;
+      font-size: 16px;
+      margin-left: 5px;
+      cursor: pointer;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+
+    ul {
+      margin-top: 20px;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background: white;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .removeBtn {
+      margin-left: 10px;
+      padding: 4px 8px;
+      border: none;
+      background: #dc3545;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>My To-Do List</h1>
+  <input type="text" id="taskInput" placeholder="Enter a new task">
+  <button id="addBtn">Add Task</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    // Select DOM elements
+    const taskInput = document.getElementById("taskInput");
+    const addBtn = document.getElementById("addBtn");
+    const taskList = document.getElementById("taskList");
+
+    // Function to add new task
+    function addTask() {
+      const taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+      }
+
+      // Create list item
+      const li = document.createElement("li");
+      li.textContent = taskText;
+
+      // Toggle completed class on click
+      li.addEventListener("click", () => {
+        li.classList.toggle("completed");
+      });
+
+      // Create remove button
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "removeBtn";
+      removeBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent li click event
+        li.remove();
+      });
+
+      // Append remove button to li
+      li.appendChild(removeBtn);
+
+      // Add li to the list
+      taskList.appendChild(li);
+
+      // Clear input
+      taskInput.value = "";
+    }
+
+    // Add task when button is clicked
+    addBtn.addEventListener("click", addTask);
+
+    // Add task when pressing Enter
+    taskInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        addTask();
+      }
+    });
+  </script>
+</body>
+</html>
