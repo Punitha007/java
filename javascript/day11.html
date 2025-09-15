@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Local storage -> stores data permanently
+        //(until cleared by user or code)
+        localStorage.setItem("username","javascript");
+        localStorage.getItem("username");
+        localStorage.removeItem("username");
+        localStorage.clear();
+        let fruits=["apple","orange","grapes"];
+        //console.log(fruits[1]);
+        localStorage.setItem("details",JSON.stringify(fruits))
+        let stredarr=JSON.parse(localStorage.getItem("details"))
+        console.log(stredarr);
+        localStorage.clear();
+        //Storing an array of objects in local storage
+        let subject=[{Sub1:"Math",
+                     Sub2:"science"}];
+        localStorage.setItem("subjectname",JSON.stringify(subject));
+        let stredaobj=JSON.parse(localStorage.getItem("subjectname"));
+        //session storage
+        //useful for temporary data
+        //(like login session,form progress)
+        sessionStorage.setItem("fruits","apple");
+        sessionStorage.getItem("fruits");
+
+    </script>
+</body>
+</html>
